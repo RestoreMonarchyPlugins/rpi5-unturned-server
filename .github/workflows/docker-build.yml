@@ -3,8 +3,11 @@ name: Docker Build
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    paths:
+      - 'Dockerfile'
+      - 'entrypoint.sh'
+      - 'start.sh'
+      - 'docker-compose.yml'
 
 jobs:
   build:
