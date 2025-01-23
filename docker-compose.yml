@@ -1,0 +1,10 @@
+services:
+ unturned:
+   container_name: unturned
+   ports:
+      - "27115:27115"
+   volumes:
+     - ./U3DS:/opt/U3DS
+   restart: always
+   stdin_open: true
+   tty: true
