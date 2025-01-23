@@ -2,7 +2,10 @@
 Docker image for running Unturned Dedicated Server on ARM devices (Raspberry Pi)
 
 ## Usage
+Run the following commands to pull and run the docker image
 ```sh
+docker pull ghcr.io/restoremonarchyplugins/unturned-arm-server:latest
+
 docker run -d \
  --name unturned \
  -p 27115:27115 \
