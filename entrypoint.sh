@@ -3,6 +3,7 @@ set -e
 
 cd ${STEAMCMDDIR}
 
+printf "Unturned Arm Server v0.1\n"
 printf "Starting SteamCMD\n"
 
 # Initialize SteamCMD
