@@ -20,6 +20,27 @@ Then restart the ssh service
 sudo systemctl restart ssh
 ```
 
+## Changing Kernel Page Size
+SteamCMD requires a kernel page size of 4KB.  
+To check the current page size run the following command
+```sh
+getconf PAGESIZE
+```
+If the page size is not 4KB, but for example 16KB, you will need to change it by editing the boot configuration file
+```sh
+nano /boot/firmware/config.txt
+```
+
+Add the following line to the file
+```sh
+kernel=kernel8.img
+```
+
+Then reboot the device
+```sh
+reboot
+```
+
 ## Docker Installation
 Login as root user and run the following command to install Docker
 ```sh
