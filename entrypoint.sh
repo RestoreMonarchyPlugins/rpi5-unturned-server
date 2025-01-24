@@ -3,21 +3,27 @@ set -e
 
 cd ${STEAMCMDDIR}
 
-# Initialize SteamCMD
-./steamcmd.sh +quit
+printf "Starting SteamCMD\n"
 
-# Install/Update Unturned Dedicated Server
+# Initialize SteamCMD
+box86 ./steamcmd.sh +quit
+
+printf "SteamCMD finished\n"
+
 if [ -f /opt/U3DS/.validate ]; then
     rm /opt/U3DS/.validate
-    box64 ${STEAMCMDDIR}/steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 validate +quit
+    printf "Validating Unturned server\n"
+    box86 ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 validate +quit
 else
-    box64 ${STEAMCMDDIR}/steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 +quit
+   printf "Updating Unturned server\n"
+    box86 ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 +quit
 fi
 
 # Setup Rocket mod if not vanilla
 if [ ! -f /opt/U3DS/.vanilla ] && [ -d /opt/U3DS/Extras/Rocket.Unturned ]; then
     mkdir -p /opt/U3DS/Modules
     cp -r /opt/U3DS/Extras/Rocket.Unturned /opt/U3DS/Modules/
+    printf "Rocket mod installed\n"
 fi
 
 # Setup Steam client
@@ -31,6 +37,7 @@ ln -sf ../.steam/sdk64/steamclient.so Unturned_Headless_Data/Plugins/x86_64/stea
 if [ ! -f start.sh ]; then
     cp /opt/unturned-config/start.sh ./start.sh
     chmod +x start.sh
+    printf "Start script copied\n"
 fi
 
 export LD_LIBRARY_PATH="./Unturned_Headless_Data/Plugins/x86_64/:${LD_LIBRARY_PATH}"
