@@ -5,9 +5,9 @@ cd /opt/steamcmd
 # If the .validate file exists, validate the server files
 if [ -f /opt/U3DS/.validate ]; then
    rm /opt/U3DS/.validate
-   ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 validate +quit
+   ./steamcmd.sh +@sSteamCmdForcePlatformType linux64 +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 validate +quit
 else
-   ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 +quit
+   ./steamcmd.sh +@sSteamCmdForcePlatformType linux64 +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 +quit
 fi
 
 mkdir -p /opt/U3DS/.steam/sdk32
