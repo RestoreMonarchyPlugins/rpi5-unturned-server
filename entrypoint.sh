@@ -8,6 +8,12 @@ else
    ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 +quit
 fi
 
+if [ -f /opt/U3DS/.vanilla ]; then
+   rm -rf /opt/U3DS/Modules/Rocket.Unturned
+else
+   cp -r /opt/U3DS/Extras/Rocket.Unturned /opt/U3DS/Modules/Rocket.Unturned
+fi
+
 mkdir -p /opt/U3DS/.steam/sdk64
 cp linux64/steamclient.so /opt/U3DS/.steam/sdk64/
 cd /opt/U3DS
