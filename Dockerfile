@@ -1,4 +1,4 @@
-FROM arm64v8/debian:bookworm-slim
+FROM arm64v8/debian:bookworm
 LABEL com.docker.image.architecture=arm64
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -7,7 +7,8 @@ ENV STEAMCMDDIR "/opt/steamcmd"
 ENV LD_LIBRARY_PATH "${LD_LIBRARY_PATH}:/usr/lib/box64-x86_64-linux-gnu"
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN dpkg --add-architecture armhf && \
+    apt-get update && apt-get install -y \
     wget \
     curl \
     gpg \
@@ -15,7 +16,8 @@ RUN apt-get update && apt-get install -y \
     libcurl4 \
     libc6 \
     libstdc++6 \
-    lib32gcc-s1 \
+    libc6:armhf \
+    libstdc++6:armhf \
     && rm -rf /var/lib/apt/lists/*
 
 # Install box64
@@ -31,7 +33,6 @@ RUN useradd -m ${USER} \
 
 WORKDIR ${STEAMCMDDIR}
 
-# Install SteamCMD as steam user
 USER ${USER}
 RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf - \
     && mkdir -p ~/.steam/sdk64 \
