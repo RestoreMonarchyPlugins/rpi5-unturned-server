@@ -1,23 +1,19 @@
 #!/bin/bash
 set -e
-
 cd ${STEAMCMDDIR}
-
 printf "Unturned Arm Server v0.1\n"
 printf "Starting SteamCMD\n"
-
 # Initialize SteamCMD
-box86 ./steamcmd.sh +quit
-
+box64 ./steamcmd.sh +quit
 printf "SteamCMD finished\n"
 
 if [ -f /opt/U3DS/.validate ]; then
     rm /opt/U3DS/.validate
     printf "Validating Unturned server\n"
-    box86 ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 validate +quit
+    box64 ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 validate +quit
 else
-   printf "Updating Unturned server\n"
-    box86 ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 +quit
+    printf "Updating Unturned server\n"
+    box64 ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 +quit
 fi
 
 # Setup Rocket mod if not vanilla
