@@ -3,9 +3,9 @@ cd /opt/steamcmd
 
 if [ -f /opt/U3DS/.validate ]; then
    rm /opt/U3DS/.validate
-   box64 ./steamcmd.sh +@sSteamCmdForcePlatformType linux64 +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 validate +quit
+   box64 ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 validate +quit
 else
-   box64 ./steamcmd.sh +@sSteamCmdForcePlatformType linux64 +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 +quit
+   box64 ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 +quit
 fi
 
 mkdir -p /opt/U3DS/.steam/sdk64
