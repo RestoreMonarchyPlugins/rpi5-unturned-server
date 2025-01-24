@@ -26,7 +26,8 @@ To check the current page size run the following command
 ```sh
 getconf PAGESIZE
 ```
-If the page size is not 4KB, but for example 16KB, you will need to change it by editing the boot configuration file
+
+If the page size is not 4KB (4096), but for example 16KB, you will need to change it by editing the boot configuration file
 ```sh
 nano /boot/firmware/config.txt
 ```
