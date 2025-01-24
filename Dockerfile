@@ -4,6 +4,7 @@ ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/lib/box64-x86_64-linux-gnu"
 ENV USER=steam
 ENV HOMEDIR="/home/${USER}"
 ENV STEAMCMDDIR="${HOMEDIR}/steamcmd"
+ENV ARM64_DEVICE=rpi5
 
 # Create directories and set permissions
 RUN mkdir -p /opt/U3DS /opt/unturned-config && \
@@ -12,7 +13,8 @@ RUN mkdir -p /opt/U3DS /opt/unturned-config && \
 # Copy scripts
 COPY entrypoint.sh /opt/
 COPY start.sh /opt/unturned-config/start.sh
-RUN chmod +x /opt/entrypoint.sh /opt/unturned-config/start.sh
+RUN chmod +x /opt/entrypoint.sh /opt/unturned-config/start.sh && \
+    chown ${USER}:${USER} /opt/entrypoint.sh /opt/unturned-config/start.sh
 
 # Set Box64 optimizations
 ENV BOX64_DYNAREC_BIGBLOCK=0
