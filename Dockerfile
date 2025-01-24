@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM debian:bookworm
 LABEL com.docker.image.architecture=arm64
 
 RUN apt-get update && apt-get install -y \
@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install -y \
 
 # Install box64
 RUN wget https://ryanfortner.github.io/box64-debs/box64.list -O /etc/apt/sources.list.d/box64.list \
-    && wget -qO- https://ryanfortner.github.io/box64-debs/KEY.gpg | gpg --no-tty --dearmor -o /etc/apt/trusted.gpg.d/box64-debs-archive-keyring.gpg \
-    && apt-get update && apt-get install -y box64 \
+    && wget -qO- https://ryanfortner.github.io/box64-debs/KEY.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/box64-debs-archive-keyring.gpg \
+    && apt-get update && apt-get install -y box64-rpi4 \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup steamcmd
@@ -22,9 +22,7 @@ RUN curl -sSL -o steamcmd.tar.gz https://steamcdn-a.akamaihd.net/client/installe
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
 RUN mkdir -p /opt/unturned-config
 COPY start.sh /opt/unturned-config/start.sh
 RUN chmod +x /opt/unturned-config/start.sh
-
 ENTRYPOINT ["/entrypoint.sh"]
