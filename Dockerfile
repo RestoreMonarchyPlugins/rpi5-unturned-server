@@ -1,25 +1,28 @@
-FROM ghcr.io/sonroyaalmerol/steamcmd-arm64:root
+FROM debian:bookworm
+LABEL com.docker.image.architecture=arm64
 
-ENV STEAMAPPID=1110390
-ENV STEAMAPPVALIDATE=1
-ENV STEAMAPPDIR=/opt/U3DS
-ENV ARM64_DEVICE=rpi5-16k
-ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/lib/box64-x86_64-linux-gnu"
+RUN apt-get update && apt-get install -y \
+   wget \
+   curl \
+   gpg \
+   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /opt/U3DS /opt/unturned-config && \
-    chown -R steam:steam /opt/U3DS /opt/unturned-config
+# Install box64
+RUN wget https://ryanfortner.github.io/box64-debs/box64.list -O /etc/apt/sources.list.d/box64.list \
+   && wget -qO- https://ryanfortner.github.io/box64-debs/KEY.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/box64-debs-archive-keyring.gpg \
+   && apt-get update && apt-get install -y box64 \
+   && rm -rf /var/lib/apt/lists/*
 
-COPY entrypoint.sh /opt/
+# Setup steamcmd
+RUN mkdir -p /opt/steamcmd
+WORKDIR /opt/steamcmd
+RUN curl -sSL -o steamcmd.tar.gz https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
+   && tar -xzvf steamcmd.tar.gz \
+   && rm steamcmd.tar.gz
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+RUN mkdir -p /opt/unturned-config
 COPY start.sh /opt/unturned-config/start.sh
-RUN chmod +x /opt/entrypoint.sh /opt/unturned-config/start.sh && \
-    chown steam:steam /opt/entrypoint.sh /opt/unturned-config/start.sh
-
-ENV BOX64_DYNAREC_BIGBLOCK=0
-ENV BOX64_DYNAREC_SAFEFLAGS=2
-ENV BOX64_DYNAREC_STRONGMEM=3
-ENV BOX64_DYNAREC_X87DOUBLE=1
-
-USER steam
-WORKDIR ${STEAMCMDDIR}
-
-ENTRYPOINT ["/opt/entrypoint.sh"]
+RUN chmod +x /opt/unturned-config/start.sh
+ENTRYPOINT ["/entrypoint.sh"]

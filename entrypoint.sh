@@ -1,41 +1,29 @@
 #!/bin/bash
-set -e
-cd "${STEAMCMDDIR}"
+cd /opt/steamcmd
 
-printf "Unturned Arm Server v0.1\n"
-printf "Starting SteamCMD\n"
-
-# Download Updates
-if [[ "$STEAMAPPVALIDATE" -eq 1 ]]; then
-    VALIDATE="validate"
+if [ -f /opt/U3DS/.validate ]; then
+   rm /opt/U3DS/.validate
+   ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 validate +quit
+else
+   ./steamcmd.sh +force_install_dir /opt/U3DS +login anonymous +app_update 1110390 +quit
 fi
 
-eval bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
-    +login anonymous \
-    +app_update "${STEAMAPPID}" "${VALIDATE}" \
-    +quit
-
-# Setup Steam client
-mkdir -p "${STEAMAPPDIR}"/.steam/sdk64
-ln -sfT "${STEAMCMDDIR}"/linux64/steamclient.so "${STEAMAPPDIR}"/.steam/sdk64/steamclient.so
-
-# Setup Rocket mod
-if [ ! -f "${STEAMAPPDIR}"/.vanilla ] && [ -d "${STEAMAPPDIR}"/Extras/Rocket.Unturned ]; then
-    mkdir -p "${STEAMAPPDIR}"/Modules
-    cp -r "${STEAMAPPDIR}"/Extras/Rocket.Unturned "${STEAMAPPDIR}"/Modules/
-    printf "Rocket mod installed\n"
+if [ -f /opt/U3DS/.vanilla ]; then
+   rm -rf /opt/U3DS/Modules/Rocket.Unturned
+else
+   cp -r /opt/U3DS/Extras/Rocket.Unturned /opt/U3DS/Modules/Rocket.Unturned
 fi
 
-# Setup plugins directory
-mkdir -p "${STEAMAPPDIR}"/Unturned_Headless_Data/Plugins/x86_64/
-ln -sf "${STEAMAPPDIR}"/.steam/sdk64/steamclient.so "${STEAMAPPDIR}"/Unturned_Headless_Data/Plugins/x86_64/steamclient.so
+mkdir -p /opt/U3DS/.steam/sdk64
+cp linux64/steamclient.so /opt/U3DS/.steam/sdk64/
+cd /opt/U3DS
+mkdir -p Unturned_Headless_Data/Plugins/x86_64/
+ln -sf ../.steam/sdk64/steamclient.so Unturned_Headless_Data/Plugins/x86_64/steamclient.so
 
-# Copy start script if not exists
-if [ ! -f "${STEAMAPPDIR}"/start.sh ]; then
-    cp /opt/unturned-config/start.sh "${STEAMAPPDIR}"/start.sh
-    chmod +x "${STEAMAPPDIR}"/start.sh
+if [ ! -f start.sh ]; then
+    cp /opt/unturned-config/start.sh ./start.sh
+    chmod +x start.sh
 fi
 
-cd "${STEAMAPPDIR}"
-export LD_LIBRARY_PATH="./Unturned_Headless_Data/Plugins/x86_64/:${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="./Unturned_Headless_Data/Plugins/x86_64/"
 exec box64 ./start.sh
