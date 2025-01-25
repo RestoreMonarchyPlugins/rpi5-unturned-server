@@ -22,6 +22,8 @@ Then restart the ssh service
 sudo systemctl restart ssh
 ```
 
+Now you can log in as root.
+
 ## Changing Kernel Page Size
 SteamCMD requires a kernel page size of 4KB.  
 To check the current page size run the following command
@@ -38,6 +40,8 @@ Add the following line to the file
 ```sh
 kernel=kernel8.img
 ```
+![image](https://github.com/user-attachments/assets/42199015-c340-40e9-a502-5cc62aa07d2c)
+
 
 Then reboot the device
 ```sh
