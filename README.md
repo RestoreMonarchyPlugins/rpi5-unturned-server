@@ -58,6 +58,24 @@ Then enable and start the Docker service
 systemctl enable --now docker
 ```
 
+## Box64 Installation
+Download Box64 repository
+```sh
+wget https://ryanfortner.github.io/box64-debs/box64.list -O /etc/apt/sources.list.d/box64.list
+```
+Add Box64 repository
+```sh
+wget -qO- https://ryanfortner.github.io/box64-debs/KEY.gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/box64-debs-archive-keyring.gpg
+```
+Update packages
+```sh
+apt update
+```
+Install Box64
+```sh
+apt install box64
+```
+
 ## Unturned Server Installation
 First pull the latest version of the image
 ```sh
