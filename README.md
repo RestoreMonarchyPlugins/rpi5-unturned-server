@@ -10,10 +10,12 @@ Then enable remote connections to root user, open `sshd_config` file
 ```sh
 sudo nano /etc/ssh/sshd_config
 ```
-and add the following line to the file
+and add the following line to the file, after `Include /etc/ssh/sshd_config.d/*.conf` line
+
 ```
 PermitRootLogin yes
 ```
+![image](https://github.com/user-attachments/assets/e501f641-8f80-40af-840f-b20e62bb9854)
 
 Then restart the ssh service
 ```sh
