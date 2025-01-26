@@ -36,4 +36,4 @@ jobs:
         with:
           platforms: linux/arm64
           push: true
-          tags: ghcr.io/restoremonarchyplugins/unturned-arm-server:latest
+          tags: ghcr.io/restoremonarchyplugins/rpi5-unturned-server:latest
