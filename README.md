@@ -1,5 +1,5 @@
 # Unturned ARM Server
-Docker image for running Unturned Dedicated Server on ARM devices (Raspberry Pi 5)
+Docker image for running Unturned Dedicated Server on ARM device Raspberry Pi 5
 
 ## Enabling Root User
 Set the password for the root user using this command:
