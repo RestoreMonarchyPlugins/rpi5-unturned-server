@@ -79,7 +79,7 @@ apt install box64
 ## Unturned Server Installation
 First pull the latest version of the image
 ```sh
-docker pull ghcr.io/restoremonarchyplugins/unturned-arm-server:latest
+docker pull ghcr.io/restoremonarchyplugins/rpi5-unturned-server:latest
 ```
 Then run the following command to create and start the server. This will create a new container named `unturned` and create a volume named `U3DS` in the current directory. The port `27115` is used for Rocket RCON. To join the server you will need to use Server Code.
 ```sh
@@ -87,7 +87,7 @@ docker run -d \
  --name unturned \
  -p 27115:27115 \
  -v ./U3DS:/opt/U3DS \
- ghcr.io/restoremonarchyplugins/unturned-arm-server:latest
+ ghcr.io/restoremonarchyplugins/rpi5-unturned-server:latest
 ```
 
 ## Other features
