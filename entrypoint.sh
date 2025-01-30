@@ -11,7 +11,7 @@ fi
 if [ -f /opt/U3DS/.vanilla ]; then
    rm -rf /opt/U3DS/Modules/Rocket.Unturned
 else
-   cp -r /opt/U3DS/Extras/Rocket.Unturned /opt/U3DS/Modules/Rocket.Unturned
+   cp -r /opt/U3DS/Extras/Rocket.Unturned /opt/U3DS/Modules/
 fi
 
 mkdir -p /opt/U3DS/.steam/sdk64
